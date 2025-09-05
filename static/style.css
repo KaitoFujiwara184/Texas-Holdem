@@ -1,0 +1,150 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.table {
+    background: url('table.png') center/cover no-repeat;
+    position: relative;
+    width: 800px;
+    height: 450px;
+    margin: 20px auto;
+}
+
+.board {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    display: flex;
+    gap: 4px;
+}
+
+.card-img {
+    width: 60px;
+    height: auto;
+    margin: 2px;
+}
+
+.seat {
+    position: absolute;
+    text-align: center;
+    width: 120px;
+    color: #fff;
+}
+
+.seat .hand {
+    display: flex;
+    justify-content: center;
+}
+
+.player-info {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 2px 4px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.player-info .player-name,
+.player-info .stack {
+    margin: 0 2px;
+}
+
+.seat .bet {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.seat-0 .bet,
+.seat-1 .bet {
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, 20px);
+}
+
+.seat-3 .bet,
+.seat-4 .bet {
+    bottom: 100%;
+    left: 50%;
+    transform: translate(-50%, -20px);
+}
+
+.seat-2 .bet {
+    right: 100%;
+    top: 50%;
+    transform: translate(-30px, -50%);
+}
+
+.seat-5 .bet {
+    left: 100%;
+    top: 50%;
+    transform: translate(30px, -50%);
+}
+
+.seat-0 { top: 0%; left: 18%; }
+.seat-1 { top: 0%; right: 18%; }
+.seat-2 { top: 50%; right: -5%; transform: translateY(-50%); }
+.seat-3 { bottom: 0%; right: 18%; }
+.seat-4 { bottom: 0%; left: 18%; }
+.seat-5 { top: 50%; left: -5%; transform: translateY(-50%); }
+
+.pot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.folded {
+    opacity: 0.5;
+}
+
+.acting {
+    border: 2px solid yellow;
+    border-radius: 8px;
+}
+
+.btn-marker {
+    position: absolute;
+    background: #fff;
+    color: #000;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.seat-0 .btn-marker,
+.seat-1 .btn-marker {
+    top: 130%;
+    left: 50%;
+    transform: translate(-50%, -10px);
+}
+
+.seat-3 .btn-marker,
+.seat-4 .btn-marker {
+    bottom: 130%;
+    left: 50%;
+    transform: translate(-50%, 10px);
+}
+
+.seat-2 .btn-marker {
+    right: 130%;
+    top: 50%;
+    transform: translate(10px, -50%);
+}
+
+.seat-5 .btn-marker {
+    left: 130%;
+    top: 50%;
+    transform: translate(-10px, -50%);
+}

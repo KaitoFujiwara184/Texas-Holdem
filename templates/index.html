@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Texas Hold'em</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<h1>Texas Hold'em</h1>
+<p>Stage: {{ game.stage }}</p>
+<p>Pot: {{ '%.2f'|format(game.pot) }}</p>
+<div class="table">
+  <div class="board">
+    {% for card in game.board %}
+      <img src="{{ url_for('static', filename='cards/' ~ card|lower ~ '.png') }}" alt="{{ card }}" class="card-img">
+    {% endfor %}
+  </div>
+  <div class="pot">Pot: {{ '%.2f'|format(game.pot) }}</div>
+  {% for player in game.players %}
+  <div class="seat seat-{{ loop.index0 }} {% if not player.in_hand %}folded{% endif %} {% if game.stage != 'showdown' and player == game.current_player() %}acting{% endif %}">
+    {% if player.position == 'BTN' %}
+    <div class="btn-marker">BTN</div>
+    {% endif %}
+    <div class="player-info">
+      <span class="player-name">{{ player.name }}</span>
+      <span class="stack">{{ '%.2f'|format(player.stack) }}</span>
+    </div>
+    <div class="hand">
+      {% if game.stage == 'showdown' or player == game.current_player() %}
+        {% for c in player.hand %}
+          <img src="{{ url_for('static', filename='cards/' ~ c|lower ~ '.png') }}" alt="{{ c }}" class="card-img">
+        {% endfor %}
+      {% endif %}
+    </div>
+    {% if player.current_bet > 0 %}
+    <div class="bet">{{ '%.2f'|format(player.current_bet) }}</div>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+
+{% if game.stage != 'showdown' %}
+<h2>Action: {{ game.current_player().name }}</h2>
+{% set to_call = game.current_bet - game.current_player().current_bet %}
+{% set call_label = 'Check' if to_call == 0 else 'Call' %}
+{% set raise_label = 'Bet' if game.current_bet == 0 else 'Raise' %}
+<form method="post" action="{{ url_for('action') }}">
+  <button type="submit" name="action" value="fold">Fold</button>
+  <button type="submit" name="action" value="call">{{ call_label }}</button>
+  <input type="number" name="amount" min="0" placeholder="{{ raise_label }} to">
+  <button type="submit" name="action" value="raise">{{ raise_label }}</button>
+</form>
+{% else %}
+<h2>Showdown</h2>
+<ul>
+  {% for name, amt in game.showdown_payouts.items() %}
+    <li>{{ name }} wins {{ '%.2f'|format(amt) }}</li>
+  {% endfor %}
+</ul>
+<a href="{{ url_for('new_hand') }}">Start New Hand</a>
+{% endif %}
+</body>
+</html>
